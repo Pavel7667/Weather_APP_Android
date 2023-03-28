@@ -21,12 +21,14 @@ import com.google.android.material.tabs.TabLayoutMediator
  * @constructor Create empty Main fragment
  */
 class MainFragment : Fragment() {
+    // List of Fragments
     private val fList = listOf(
         HoursFragment.newInstance(),
         DaysFragment.newInstance()
     )
+    // List of TabLayout Names
     private val tList = listOf(
-        "HOURS",
+        "HOURS_XXX",
         "DAYS"
     )
     private lateinit var binding: FragmentMainBinding
@@ -50,6 +52,9 @@ class MainFragment : Fragment() {
 
     }
 
+    /**
+     * Fun Init to switching between Fragments
+     */
     private fun init() = with(binding) {
         val adapter = VpAdapter(activity as FragmentActivity, fList)
         vp.adapter = adapter
