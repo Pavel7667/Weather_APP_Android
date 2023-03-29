@@ -26,14 +26,12 @@ import com.example.weather_api.adapters.VpAdapter
 import com.example.weather_api.adapters.WeatherModel
 import com.example.weather_api.databinding.FragmentMainBinding
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
 import org.json.JSONObject
-import kotlin.coroutines.cancellation.CancellationException
 
 const val API_KEY = "8af04a7d0ff243f59f882715232803"
 
@@ -101,6 +99,13 @@ class MainFragment : Fragment() {
             tabLayout.selectTab(tabLayout.getTabAt(0))
             checkLocation()
         }
+        idSearch.setOnClickListener{
+            DialogManager.searchByNameDialog(requireContext(),object: DialogManager.Listener {
+                override fun onClick(name: String?) {
+                    name?.let { it1 -> requestWeatherData(it1) }
+                }
+            })
+        }
     }
 
     /**
@@ -111,7 +116,7 @@ class MainFragment : Fragment() {
             getLocation()
         }else{
             DialogManager.locationSettingDialog(requireContext(),object :DialogManager.Listener{
-                override fun onClick() {
+                override fun onClick(name: String?) {
                     startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
                 }
             })
