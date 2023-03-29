@@ -15,8 +15,10 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.weather_api.adapters.VpAdapter
+import com.example.weather_api.adapters.WeatherModel
 import com.example.weather_api.databinding.FragmentMainBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import org.json.JSONObject
 
 const val API_KEY = "8af04a7d0ff243f59f882715232803"
 
@@ -88,7 +90,9 @@ class MainFragment : Fragment() {
             pLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
-
+    /**
+     * requestWeatherData request from API
+     */
     private fun requestWeatherData(city: String) {
         val url = "https://api.weatherapi.com/v1/forecast.json?" +
                 "key=$API_KEY" +
@@ -101,14 +105,31 @@ class MainFragment : Fragment() {
         val request = StringRequest(
             Request.Method.GET,
             url,
-            { result ->
-                Log.d("MyLog", "Result == $result")
+            { result -> parseWeatherData(result)
             },
             { error ->
                 Log.d("MyLog", "Show error: $error")
             }
         )
         queue.add(request)
+    }
+
+    /**
+     * Parse JSON from API
+     */
+    private fun parseWeatherData(result: String) {
+        val mainObject = JSONObject(result)
+        val item = WeatherModel(
+            mainObject.getJSONObject("location").getString("name"),
+            mainObject.getJSONObject("current").getString("last_updated"),
+            mainObject.getJSONObject("current").getJSONObject("condition").getString("text"),
+            mainObject.getJSONObject("current").getString("temp_c"),
+            "",
+            "",
+            mainObject.getJSONObject("current").getJSONObject("condition").getString("icon"),
+            ""
+        )
+        Log.d("MyLog", "JSON show: ${item.city}")
     }
 
     companion object {
