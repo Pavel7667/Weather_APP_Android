@@ -43,19 +43,21 @@
                 android:id="@+id/tvData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="8dp"
                 android:fontFamily="cursive"
+                android:gravity="center"
                 android:text="20/20/2020"
-                android:textColor="#000000"
-                android:textSize="12sp"
+                android:textColor="#00FD35"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/imWeather"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/imWeather" />
 
             <ImageView
                 android:id="@+id/imWeather"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_launcher_foreground"
@@ -72,7 +74,7 @@
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imWeather" />
+                app:layout_constraintTop_toBottomOf="@+id/tvData" />
 
             <TextView
                 android:id="@+id/tvCurrentTemp"
@@ -81,7 +83,7 @@
                 android:fontFamily="cursive"
                 android:text="20°C"
                 android:textColor="#FFFEFE"
-                android:textSize="50sp"
+                android:textSize="34sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvCity" />
@@ -93,6 +95,7 @@
                 android:fontFamily="cursive"
                 android:text="Sunny"
                 android:textColor="#F8F6F6"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvCurrentTemp" />
@@ -101,37 +104,37 @@
                 android:id="@+id/tvMaxMin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
                 android:fontFamily="cursive"
                 android:text="36 / 15"
                 android:textColor="#FAF6F6"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvCondition" />
 
             <ImageButton
                 android:id="@+id/idSync"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="72dp"
-                android:layout_marginEnd="10dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="@null"
                 android:src="@drawable/baseline_cloud_sync_24"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imWeather"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <ImageButton
                 android:id="@+id/idSearch"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="112dp"
+                android:layout_marginBottom="20dp"
                 android:background="@null"
                 android:src="@drawable/baseline_search_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvData" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
