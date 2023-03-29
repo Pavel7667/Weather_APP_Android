@@ -46,8 +46,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="cursive"
-                android:text="28/03/2023"
-                android:textColor="#FFFFFF"
+                android:text="20/20/2020"
+                android:textColor="#000000"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="cursive"
-                android:text="Madrid"
+                android:text="City"
                 android:textColor="#FFFFFF"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="cursive"
-                android:text="20C"
+                android:text="20°C"
                 android:textColor="#FFFEFE"
                 android:textSize="50sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -123,7 +123,7 @@
                 app:layout_constraintVertical_bias="1.0" />
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/idSearch"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="20dp"
