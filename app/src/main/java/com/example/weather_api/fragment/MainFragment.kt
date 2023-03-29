@@ -45,7 +45,7 @@ class MainFragment : Fragment() {
     )
     private lateinit var binding: FragmentMainBinding
     private lateinit var pLauncher: ActivityResultLauncher<String>
-    private val model : MainViewModel by activityViewModels()
+    private val model: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,17 +77,17 @@ class MainFragment : Fragment() {
         }.attach()
     }
 
-    private fun updateCurrentCard() = with(binding){
-        model.liveDataCurrent.observe(viewLifecycleOwner){
+    private fun updateCurrentCard() = with(binding) {
+        model.liveDataCurrent.observe(viewLifecycleOwner) {
             tvData.text = it.time
-            tvCity.text=it.city
-            tvCurrentTemp.text="${it.currentTemp}C°"
-            tvCondition.text=it.condition
+            tvCity.text = it.city
+            tvCurrentTemp.text = "${it.currentTemp}C°"
+            tvCondition.text = it.condition
 
             val maxMinTemp = "${it.maxTemp}/${it.minTemp}C°"
             tvMaxMin.text = maxMinTemp
 
-            Picasso.get().load("https:"+it.imageUrl).into(imWeather)
+            Picasso.get().load("https:" + it.imageUrl).into(imWeather)
         }
     }
 
@@ -141,7 +141,7 @@ class MainFragment : Fragment() {
     private fun parseWeatherForDays(result: String) {
         val mainObject = JSONObject(result)
         val list = parseDays(mainObject)
-        parseForCurrentData(mainObject,list[0])
+        parseForCurrentData(mainObject, list[0])
     }
 
     private fun parseDays(mainObject: JSONObject): List<WeatherModel> {
@@ -162,6 +162,7 @@ class MainFragment : Fragment() {
             )
             list.add(item)
         }
+        model.liveDataList.value = list
         return list
     }
 
