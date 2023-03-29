@@ -1,8 +1,12 @@
 package com.example.weather_api.fragment
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,6 +28,7 @@ import com.example.weather_api.databinding.FragmentMainBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
@@ -34,7 +39,7 @@ const val API_KEY = "8af04a7d0ff243f59f882715232803"
 
 
 /**
- * Fragment for work
+ * Main fragment
  *
  * @constructor Create empty Main fragment
  */
@@ -72,7 +77,14 @@ class MainFragment : Fragment() {
         checkPermission()
         init()
         updateCurrentCard()
-        getLocation()
+    }
+
+    /**
+     * On resume check GPS
+     */
+    override fun onResume() {
+        super.onResume()
+        checkLocation()
     }
 
     /**
@@ -87,9 +99,33 @@ class MainFragment : Fragment() {
         }.attach()
         idSync.setOnClickListener{
             tabLayout.selectTab(tabLayout.getTabAt(0))
-            getLocation()
+            checkLocation()
         }
     }
+
+    /**
+     * In case no GPS show popApp window and in case positive --> send to Settings
+     */
+    private fun checkLocation(){
+        if (isLocationEnabled()){
+            getLocation()
+        }else{
+            DialogManager.locationSettingDialog(requireContext(),object :DialogManager.Listener{
+                override fun onClick() {
+                    startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                }
+            })
+        }
+    }
+
+    /**
+     * Check GPS off/on
+     */
+    private fun isLocationEnabled(): Boolean {
+        val lm = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+
 
     private fun getLocation() {
         val ct = CancellationTokenSource()
@@ -104,7 +140,7 @@ class MainFragment : Fragment() {
             return
         }
         fLocationClient
-            .getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, ct.token)
+            .getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, ct.token)
             .addOnCompleteListener {
                 requestWeatherData("${it.result.latitude},${it.result.longitude}")
             }
