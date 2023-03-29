@@ -10,12 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weather_api.MainViewModel
 import com.example.weather_api.R
 import com.example.weather_api.adapters.WeatherAdapter
+import com.example.weather_api.adapters.WeatherModel
 import com.example.weather_api.databinding.FragmentDaysBinding
 
-class DaysFragment : Fragment() {
+class DaysFragment : Fragment(), WeatherAdapter.Listener {
     private lateinit var binding: FragmentDaysBinding
     private lateinit var adapter: WeatherAdapter
-    private  val model: MainViewModel by activityViewModels()
+    private val model: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,13 +29,13 @@ class DaysFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-        model.liveDataList.observe(viewLifecycleOwner){
+        model.liveDataList.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
     }
 
-    private fun init() = with(binding){
-        adapter = WeatherAdapter()
+    private fun init() = with(binding) {
+        adapter = WeatherAdapter(this@DaysFragment)
         rcView.layoutManager = LinearLayoutManager(activity)
         rcView.adapter = adapter
     }
@@ -43,5 +44,9 @@ class DaysFragment : Fragment() {
 
         @JvmStatic
         fun newInstance() = DaysFragment()
+    }
+
+    override fun onClick(item: WeatherModel) {
+        model.liveDataCurrent.value = item
     }
 }
